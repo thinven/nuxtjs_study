@@ -52,37 +52,16 @@
           <li class="dropdown notifications-menu">
             <a href="#" class="dropdown-toggle" @click="toggleDropdown">
               <i class="fa fa-bell-o"></i>
-              <span class="label label-warning">10</span>
+              <span class="label label-warning">{{notifications_cnt}}</span>
             </a>
             <ul class="dropdown-menu">
-              <li class="header">You have 10 notifications</li>
+              <li class="header">You have {{notifications_cnt}} notifications</li>
               <li>
                 <!-- inner menu: contains the actual data -->
                 <ul class="menu">
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
-                      page and may cause design problems
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-users text-red"></i> 5 new members joined
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-shopping-cart text-green"></i> 25 sales made
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-user text-red"></i> You changed your username
+                  <li v-for="notification in notifications" :key="notification.id">
+                    <a href="#" @click="test">
+                      <i :class="'fa ' + notification.cls"></i> {{notification.msg}}
                     </a>
                   </li>
                 </ul>
@@ -94,64 +73,22 @@
           <li class="dropdown tasks-menu">
             <a href="#" class="dropdown-toggle" @click="toggleDropdown">
               <i class="fa fa-flag-o"></i>
-              <span class="label label-danger">9</span>
+              <span class="label label-danger">{{tasks_cnt}}</span>
             </a>
             <ul class="dropdown-menu">
-              <li class="header">You have 9 tasks</li>
+              <li class="header">You have {{tasks_cnt}} tasks</li>
               <li>
                 <!-- inner menu: contains the actual data -->
                 <ul class="menu">
-                  <li><!-- Task item -->
-                    <a href="#">
+                  <li v-for="task in tasks" :key="task.id"><!-- Task item -->
+                    <a href="#" @click="test">
                       <h3>
-                        Design some buttons
-                        <small class="pull-right">20%</small>
+                        {{task.msg}}
+                        <small class="pull-right">{{task.rop}}%</small>
                       </h3>
                       <div class="progress xs">
-                        <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                          <span class="sr-only">20% Complete</span>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                  <!-- end task item -->
-                  <li><!-- Task item -->
-                    <a href="#">
-                      <h3>
-                        Create a nice theme
-                        <small class="pull-right">40%</small>
-                      </h3>
-                      <div class="progress xs">
-                        <div class="progress-bar progress-bar-green" style="width: 40%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                          <span class="sr-only">40% Complete</span>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                  <!-- end task item -->
-                  <li><!-- Task item -->
-                    <a href="#">
-                      <h3>
-                        Some task I need to do
-                        <small class="pull-right">60%</small>
-                      </h3>
-                      <div class="progress xs">
-                        <div class="progress-bar progress-bar-red" style="width: 60%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                          <span class="sr-only">60% Complete</span>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                  <!-- end task item -->
-                  <li><!-- Task item -->
-                    <a href="#">
-                      <h3>
-                        Make beautiful transitions
-                        <small class="pull-right">80%</small>
-                      </h3>
-                      <div class="progress xs">
-                        <div class="progress-bar progress-bar-yellow" style="width: 80%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                          <span class="sr-only">80% Complete</span>
+                        <div :class="'progress-bar ' + task.cls" :style="'width: '+task.rop+'%'" role="progressbar" :aria-valuenow="task.rop" aria-valuemin="0" aria-valuemax="100">
+                          <span class="sr-only">{{task.rop}}% Complete</span>
                         </div>
                       </div>
                     </a>
@@ -225,6 +162,18 @@ export default {
     },
     notes_cnt() {
       return this.notes.length;
+    },
+    notifications() {
+      return this.$store.getters['adminlte/notifications/allNotifications'];
+    },
+    notifications_cnt() {
+      return this.notifications.length;
+    },
+    tasks() {
+      return this.$store.getters['adminlte/tasks/allTasks'];
+    },
+    tasks_cnt() {
+      return this.tasks.length;
     }
   },
   methods: {
