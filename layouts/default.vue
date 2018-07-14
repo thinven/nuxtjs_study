@@ -29,6 +29,9 @@ export default {
       { rel: 'stylesheet', href: '/comp/adminlte/css/AdminLTE.min.css' },
       { rel: 'stylesheet', href: '/comp/adminlte/css/skins/_all-skins.min.css' }
     ],
+    script: [
+      { src: '/comp/chartjs/Chart.min.js' }
+    ],
     bodyAttrs: {
       class: 'sidebar-mini skin-green'
     }
